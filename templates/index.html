@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <title>Сентименталды талдау</title>
+</head>
+<body>
+  <h1 class="title">Сентименталды талдау</h1>
+
+  <form method="POST" onSubmit="return validate();" class="form">
+    <div class="form-div">
+      <textarea type="text" name="text" class="textarea"></textarea>
+      <button type="submit" class="button" onclick="this.form.submit();">
+        Көңіл-күйді анықтау
+      </button>
+    </div>
+  </form>
+
+  {% if lrSentiment %}
+    <div class="results">
+      <div>
+        <h3>Logistic regression</h3>
+        <div class="result {{'positive' if lrSentiment=='Positive' }}">
+          {% if lrSentiment=='Positive' %}
+            <p>Оң</p>
+          {% else %}
+            <p>Теріс</p>
+          {% endif %}
+        </div>
+      </div>
+      <div >
+        <h3>Multinomial Naive Bayes</h3>
+        <div class="result {{'positive' if mnbSentiment=='Positive' }}">
+          {% if mnbSentiment=='Positive' %}
+          <p>Оң</p>
+          {% else %}
+          <p>Теріс</p>
+          {% endif %}
+        </div>
+      </div>
+      <div>
+        <h3>Linear SVM</h3>
+        <div class="result {{'positive' if linearSvcSentiment=='Positive' }}">
+          {% if linearSvcSentiment=='Positive' %}
+          <p>Оң</p>
+          {% else %}
+          <p>Теріс</p>
+          {% endif %}
+        </div>
+      </div>
+      <div>
+        <h3>XGBoost</h3>
+        <div class="result {{'positive' if xgboDfSentiment=='Positive' }}">
+          {% if xgboDfSentiment=='Positive' %}
+          <p>Оң</p>
+          {% else %}
+          <p>Теріс</p>
+          {% endif %}
+        </div>
+      </div>
+      <div>
+        <h3>LSTM</h3>
+        <div class="result {{'positive' if predicted_label=='1' }}">
+          {% if predicted_label=='1' %}
+          <p>Оң</p>
+          {% else %}
+          <p>Теріс</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% else %}
+  <div class="results">
+  </div>
+  {% endif %}
+</body>
+</html>
